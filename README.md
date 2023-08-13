@@ -173,7 +173,7 @@ OrbitVision is an open-source project distributed under the [MIT License](LICENS
 
 ## Contact
 
-If you have any questions, suggestions, or just want to reach out, please feel free to contact us at [contact@orbitvisionapp.com](mailto:tushalgopani003@g). We'd love to hear from you!
+If you have any questions, suggestions, or just want to reach out, please feel free to contact us at [TG](mailto:tushalgopani003@g). We'd love to hear from you!
 
 ## Disclaimer
 
