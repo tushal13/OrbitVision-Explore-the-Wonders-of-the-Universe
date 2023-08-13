@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:orbitvision/Controller/homepage_controller.dart';
@@ -17,8 +18,9 @@ class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
   late AnimationController _Controller;
   late Animation opacity;
+  late Animation opacity2;
+  late Animation opacity3;
   late Animation position;
-  int CurrentIndex = 4;
 
   @override
   void initState() {
@@ -29,30 +31,29 @@ class _LandingPageState extends State<LandingPage>
 
     _Controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 6),
     )..forward();
 
     opacity = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _Controller,
-        curve: Interval(0.0, 0.3),
+        curve: Interval(0.0, 0.6, curve: Curves.easeInOut),
+      ),
+    );
+    opacity2 = Tween(begin: 0.6, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _Controller,
+        curve: Interval(0.6, 1.0, curve: Curves.easeInOut),
       ),
     );
 
-    position = Tween(begin: 5.0, end: 10.0).animate(
-      CurvedAnimation(
-        parent: _Controller,
-        curve: Interval(0.8, 1.0),
-      ),
-    );
+    opacity3 = Tween(begin: 0.9, end: 1.0).animate(_Controller);
 
     _Controller.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    final planet = SolarSystem[CurrentIndex];
     return Scaffold(
       body: Stack(
         children: [
@@ -62,63 +63,106 @@ class _LandingPageState extends State<LandingPage>
             width: double.infinity,
             fit: BoxFit.fitHeight,
           ),
-          Transform.translate(
-            offset: Offset(0, position.value),
+          Positioned(
+            top: 1,
+            left: 105,
+            right: 1,
+            bottom: 20,
             child: Opacity(
-              opacity: opacity.value,
+              opacity: opacity3.value,
               child: Container(
-                alignment: Alignment(-0.8, -0.6),
-                child: Image.asset(
-                  'assets/image/Astronaut.png',
-                  height: 210,
+                alignment: Alignment(0.0, 0.3),
+                child: SizedBox(
+                  height: 260,
+                  child: ModelViewer(
+                    src: '${SolarSystem[2].file}',
+                    disableZoom: true,
+                    autoPlay: true,
+                  ),
                 ),
               ),
             ),
           ),
+          AnimatedBuilder(
+            builder: (context, child) {
+              return Opacity(
+                opacity: opacity.value,
+                child: Container(
+                  alignment: Alignment(-0.8, -0.6),
+                  child: Image.asset(
+                    'assets/image/Astronaut.png',
+                    height: 210,
+                  ),
+                ),
+              );
+            },
+            animation: _Controller,
+          ),
           Container(
             padding: const EdgeInsets.only(left: 32),
             alignment: Alignment(-1, 0.6),
-            child: Text(
-              'OrbitVision',
-              style: TextStyle(fontSize: 35, color: Colors.white),
+            child: AnimatedTextKit(
+              animatedTexts: [
+                TyperAnimatedText(
+                  speed: Duration(milliseconds: 300),
+                  'OrbitVision',
+                  textStyle: TextStyle(
+                      fontFamily: 'RBold', fontSize: 35, color: Colors.white),
+                ),
+              ],
+              isRepeatingAnimation: false,
             ),
           ),
           Container(
             padding: const EdgeInsets.only(left: 32),
             alignment: Alignment(-1, 0.7),
-            child: Text(
-              "Let's Explore The Outer Space",
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w100),
+            child: AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  "Let's Explore The Outer Space",
+                  speed: Duration(milliseconds: 150),
+                  textStyle: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Light',
+                      color: Colors.white,
+                      fontWeight: FontWeight.w100),
+                ),
+              ],
+              isRepeatingAnimation: false,
             ),
           ),
-          Container(
-            alignment: Alignment(0, 0.9),
-            child: SliderButton(
-              action: () {
-                Navigator.of(context).pushNamed('Home');
-              },
-              height: 60,
-              width: 280,
-              backgroundColor: Colors.blue.shade300,
-              buttonColor: Colors.blue,
-              icon: Icon(Icons.arrow_forward_ios_rounded),
-              label: Text(
-                'Slide to Start...',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Light',
-                  color: Colors.white,
-                  wordSpacing: 2,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              dismissible: true,
-              alignLabel: Alignment.center,
-            ),
-          )
+          AnimatedBuilder(
+              animation: _Controller,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: opacity.value,
+                  child: Container(
+                    alignment: Alignment(0, 0.9),
+                    child: SliderButton(
+                      action: () {
+                        Navigator.of(context).pushNamed('Home');
+                      },
+                      height: 60,
+                      width: 280,
+                      backgroundColor: Colors.blue.shade300,
+                      buttonColor: Colors.blue,
+                      icon: Icon(Icons.arrow_forward_ios_rounded),
+                      label: Text(
+                        'Slide to Start...',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Light',
+                          color: Colors.white,
+                          wordSpacing: 2,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      dismissible: true,
+                      alignLabel: Alignment.center,
+                    ),
+                  ),
+                );
+              })
         ],
       ),
     );

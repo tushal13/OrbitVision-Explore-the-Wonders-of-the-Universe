@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:orbitvision/utility/planet_list.dart';
 import 'package:orbitvision/views/screen/home_page.dart';
@@ -29,7 +30,7 @@ class _SpleshScreenState extends State<SpleshScreen>
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 3));
 
-    animation = Tween<double>(begin: 40, end: 20).animate(CurvedAnimation(
+    animation = Tween<double>(begin: 30, end: 20).animate(CurvedAnimation(
         parent: _controller, curve: Curves.fastLinearToSlowEaseIn))
       ..addListener(() {
         setState(() {
@@ -81,18 +82,25 @@ class _SpleshScreenState extends State<SpleshScreen>
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: h / fontSize),
               AnimatedOpacity(
-                duration: Duration(milliseconds: 1000),
-                opacity: textOpacity,
-                child: Text(
-                  'ORBITVISION',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'RBold',
-                    fontSize: animation.value,
-                  ),
-                ),
-              ),
+                  duration: Duration(milliseconds: 1000),
+                  opacity: textOpacity,
+                  child: Center(
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText(
+                          speed: Duration(milliseconds: 130),
+                          'ORBIT VISION',
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RBold',
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
+                      isRepeatingAnimation: false,
+                    ),
+                  )),
             ],
           ),
           Center(

@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:orbitvision/Controller/api_controller.dart';
@@ -66,7 +67,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 ),
               ),
               const SizedBox(
-                height: 100,
+                height: 70,
               ),
               Center(
                 child: Container(
@@ -80,7 +81,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 ),
               ),
               const SizedBox(
-                height: 35,
+                height: 25,
               ),
               Center(
                 child: Column(
@@ -135,19 +136,48 @@ class _OverviewPageState extends State<OverviewPage> {
                   ],
                 ),
               ),
+              Consumer<HomepageController>(
+                builder: (context, carouselProvider, _) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 18.0),
+                    child: Center(
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(
+                          begin: carouselProvider.currentIndex.toDouble(),
+                          end: carouselProvider.currentIndex.toDouble(),
+                        ),
+                        duration: const Duration(milliseconds: 500),
+                        builder: (context, value, _) {
+                          return DotsIndicator(
+                            dotsCount: SolarSystem.length,
+                            position: value,
+                            decorator: DotsDecorator(
+                                size: const Size.square(8.0),
+                                activeSize: const Size(18.0, 8.0),
+                                activeShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                activeColor: Colors.white,
+                                color: Colors.grey.shade700),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(
-                height: 40,
+                height: 10,
               ),
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
                   height: 120,
-                  width: 142,
+                  width: double.infinity,
                   child: CarouselSlider(
                     options: CarouselOptions(
                       autoPlay: false,
                       enlargeCenterPage: true,
-                      aspectRatio: 1.2,
                       scrollPhysics: BouncingScrollPhysics(),
                       onPageChanged: (index, reason) {
                         setState(() {

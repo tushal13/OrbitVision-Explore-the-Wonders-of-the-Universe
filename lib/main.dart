@@ -5,6 +5,7 @@ import 'package:orbitvision/views/screen/3D_View.dart';
 import 'package:orbitvision/views/screen/Splesh_screen.dart';
 import 'package:orbitvision/views/screen/detile_page.dart';
 import 'package:orbitvision/views/screen/image_preview.dart';
+import 'package:orbitvision/views/screen/landing_page.dart';
 import 'package:provider/provider.dart';
 
 import 'views/screen/home_page.dart';
