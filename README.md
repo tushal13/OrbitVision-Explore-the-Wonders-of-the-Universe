@@ -134,7 +134,7 @@ To embark on your cosmic journey with OrbitVision, follow these steps:
 
 1. **Clone the Repository**: Use the following command to clone the OrbitVision repository to your local machine:
    ```
-   git clone https://github.com/your-username/orbitvision.git
+   git clone https://github.com/tushal13/orbitvision.git
    ```
 
 2. **Navigate to the Project Directory**: Move into the OrbitVision project directory:
@@ -163,7 +163,7 @@ Contributions to OrbitVision are welcome! If you encounter issues, have ideas fo
 
 ## License
 
-OrbitVision is an open-source project distributed under the [MIT License](LICENSE). You're free to use, modify, and share the code, subject to the terms specified in the license.
+OrbitVision is an open-source project distributed under the [GT License](LICENSE). You're free to use, modify, and share the code, subject to the terms specified in the license.
 
 ## Acknowledgments
 
